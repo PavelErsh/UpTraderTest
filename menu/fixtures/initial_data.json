@@ -1,0 +1,42 @@
+[
+    {
+        "model": "menu.menu",
+        "pk": 1,
+        "fields": {
+            "name": "main_menu"
+        }
+    },
+    {
+        "model": "menu.menuitem",
+        "pk": 1,
+        "fields": {
+            "menu": 1,
+            "parent": null,
+            "name": "Home",
+            "url": "/",
+            "order": 1
+        }
+    },
+    {
+        "model": "menu.menuitem",
+        "pk": 2,
+        "fields": {
+            "menu": 1,
+            "parent": null,
+            "name": "About",
+            "url": "/about/",
+            "order": 2
+        }
+    },
+    {
+        "model": "menu.menuitem",
+        "pk": 3,
+        "fields": {
+            "menu": 1,
+            "parent": null,
+            "name": "Contact",
+            "url": "/contact/",
+            "order": 3
+        }
+    }
+]
