@@ -1,5 +1,5 @@
 from django import template
-from django.urls import resolve
+from django.urls import resolve, Resolver404
 from menu.models import Menu, MenuItem
 
 register = template.Library()
@@ -12,7 +12,10 @@ def draw_menu(context, menu_name):
         return {'menu': None, 'menu_items': [], 'active_item_ids': []}
 
     path = context['request'].path
-    current_url = resolve(path).url_name
+    try:
+        current_url = resolve(path).url_name
+    except Resolver404:
+        current_url = None
 
     def get_active_items(items, active_url):
         for item in items:
@@ -25,7 +28,7 @@ def draw_menu(context, menu_name):
         return []
 
     menu_items = menu.items.filter(parent__isnull=True).prefetch_related('children')
-    active_items = get_active_items(menu.items.all(), current_url)
+    active_items = get_active_items(menu.items.all(), path)
     active_item_ids = [item.id for item in active_items]
 
     return {

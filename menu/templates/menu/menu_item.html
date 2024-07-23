@@ -1,6 +1,8 @@
-<li>
-    <a href="{{ item.get_absolute_url }}" class="{% if item.id in active_item_ids %}active{% endif %}">{{ item.name }}</a>
-    {% if item.id in active_item_ids %}
+<li class="{% if item.id in active_item_ids %}active{% endif %}">
+    <a href="{{ item.get_absolute_url }}">
+        {{ item.name }}
+    </a>
+    {% if item.children.all %}
         <ul>
             {% for child in item.children.all %}
                 {% include 'menu/menu_item.html' with item=child active_item_ids=active_item_ids %}
