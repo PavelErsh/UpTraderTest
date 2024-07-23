@@ -4,14 +4,15 @@ from menu.models import Menu, MenuItem
 
 register = template.Library()
 
-@register.inclusion_tag('menu/draw_menu.html', takes_context=True)
+
+@register.inclusion_tag("menu/draw_menu.html", takes_context=True)
 def draw_menu(context, menu_name):
     try:
         menu = Menu.objects.get(name=menu_name)
     except Menu.DoesNotExist:
-        return {'menu': None, 'menu_items': [], 'active_item_ids': []}
+        return {"menu": None, "menu_items": [], "active_item_ids": []}
 
-    path = context['request'].path
+    path = context["request"].path
     try:
         current_url = resolve(path).url_name
     except Resolver404:
@@ -27,12 +28,12 @@ def draw_menu(context, menu_name):
                     return [item] + result
         return []
 
-    menu_items = menu.items.filter(parent__isnull=True).prefetch_related('children')
+    menu_items = menu.items.filter(parent__isnull=True).prefetch_related("children")
     active_items = get_active_items(menu.items.all(), path)
     active_item_ids = [item.id for item in active_items]
 
     return {
-        'menu': menu,
-        'menu_items': menu_items,
-        'active_item_ids': active_item_ids,
+        "menu": menu,
+        "menu_items": menu_items,
+        "active_item_ids": active_item_ids,
     }
