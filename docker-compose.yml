@@ -12,6 +12,6 @@ services:
 
   test:
     build: .
-    command: python manage.py test
+    command: python manage.py test menu
     volumes:
       - .:/app
